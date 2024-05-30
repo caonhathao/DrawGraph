@@ -12,10 +12,10 @@ namespace Homework
 {
     public partial class Form1 : Form
     {
-        private int oldHeight;
-        private int oldWidth;
         private int count = 1;
         private List<Point> points = new List<Point>();
+        public static bool[,] mxGraph = new bool[100, 100];
+        public static int nodes = 0;
         public Form1()
         {
             InitializeComponent();
