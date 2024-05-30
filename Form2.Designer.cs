@@ -50,6 +50,7 @@
             this.InputField.Name = "InputField";
             this.InputField.Size = new System.Drawing.Size(161, 22);
             this.InputField.TabIndex = 1;
+            this.InputField.TextChanged += new System.EventHandler(this.InputField_TextChanged);
             // 
             // EnterBtn
             // 
@@ -59,6 +60,7 @@
             this.EnterBtn.TabIndex = 2;
             this.EnterBtn.Text = "Confirm";
             this.EnterBtn.UseVisualStyleBackColor = true;
+            this.EnterBtn.Click += new System.EventHandler(this.EnterBtn_Click);
             // 
             // Form2
             // 

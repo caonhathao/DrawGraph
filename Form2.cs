@@ -18,5 +18,14 @@ namespace Homework
             InitializeComponent();
         }
 
+        private void InputField_TextChanged(object sender, EventArgs e)
+        {
+            AddressPath = InputField.Text;
+        }
+
+        private void EnterBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
