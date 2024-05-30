@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,11 +34,32 @@ namespace Homework
 
         private void DrawBtn_Click(object sender, EventArgs e)
         {
+            ThreadStart threadStart = new ThreadStart(Draw);
+            Thread thread = new Thread(threadStart);
+            thread.Start();
+        }
+
+        void Draw()
+        {
             for (int i = 0; i < nodes; i++)
             {
                 DrawPoint();
+                System.Threading.Thread.Sleep(200);
+            }
+
+            for (int i = 1; i <= nodes; i++)
+            {
+                for (int j = 1; j <= nodes; j++)
+                {
+                    if (mxGraph[i, j] == true)
+                    {
+                        DrawLine(points[i - 1], points[j - 1]);
+                        System.Threading.Thread.Sleep(200);
+                    }
+                }
             }
         }
+
         private void DrawPoint()
         {
             Random random = new Random();
