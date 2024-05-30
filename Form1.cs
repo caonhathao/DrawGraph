@@ -27,12 +27,16 @@ namespace Homework
 
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
-
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
         }
 
         private void DrawBtn_Click(object sender, EventArgs e)
         {
-            DrawPoint();
+            for (int i = 0; i < nodes; i++)
+            {
+                DrawPoint();
+            }
         }
         private void DrawPoint()
         {
