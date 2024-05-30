@@ -71,5 +71,13 @@ namespace Homework
             solidBrush.Dispose();
             stringFormat.Dispose();
         }
+
+        private void DrawLine(Point a, Point b)
+        {
+            Pen pen = new Pen(Color.Black);
+            Graphics graphics = this.CreateGraphics();
+
+            graphics.DrawLine(pen, a.PointX, a.PointY, b.PointX, b.PointY);
+        }
     }
 }
