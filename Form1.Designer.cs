@@ -62,14 +62,14 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button DrawBtn;
         private System.Windows.Forms.Button ConnectBtn;
+        public System.Windows.Forms.Button DrawBtn;
     }
 }
 

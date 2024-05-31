@@ -16,11 +16,16 @@ namespace Homework
         public Form2()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void InputField_TextChanged(object sender, EventArgs e)
         {
             AddressPath = InputField.Text;
+        }
+
+        private void EnterBtn_Click(object sender, EventArgs e)
+        {
             if (System.IO.File.Exists(AddressPath))
             {
                 string[] lines;
@@ -35,9 +40,10 @@ namespace Homework
                     Form1.mxGraph[Convert.ToInt32(tmp[1]), Convert.ToInt32(tmp[0])] = true;
                 }
             }
+            this.Close();
         }
 
-        private void EnterBtn_Click(object sender, EventArgs e)
+        private void CloseBtn_Click(object sender, EventArgs e)
         {
             this.Close();
         }

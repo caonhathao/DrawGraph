@@ -15,15 +15,34 @@ namespace Homework
     {
         private int count = 1;
         private List<Point> points = new List<Point>();
+
         public static bool[,] mxGraph = new bool[100, 100];
         public static int nodes = 0;
+
+        private int oldWidth = 0, oldHeight = 0;
         public Form1()
         {
             InitializeComponent();
+            oldHeight = this.Height;
+            oldWidth = this.Width;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            int addX = (this.Width - oldWidth) / 2;
+            int addY = (this.Height - oldHeight) / 2;
+
+            oldHeight = this.Height;
+            oldWidth = this.Width;
+
+            DrawBtn.Location = new System.Drawing.Point(
+                DrawBtn.Left + addX,
+                DrawBtn.Top + addY);
+
+            ConnectBtn.Location = new System.Drawing.Point(
+                ConnectBtn.Left + addX,
+                ConnectBtn.Top + addY);
+
         }
 
         private void ConnectBtn_Click(object sender, EventArgs e)
@@ -34,9 +53,14 @@ namespace Homework
 
         private void DrawBtn_Click(object sender, EventArgs e)
         {
-            ThreadStart threadStart = new ThreadStart(Draw);
-            Thread thread = new Thread(threadStart);
-            thread.Start();
+            if (nodes != 0)
+            {
+                ThreadStart threadStart = new ThreadStart(Draw);
+                Thread thread = new Thread(threadStart);
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            else DrawPoint();
         }
 
         void Draw()
@@ -72,7 +96,7 @@ namespace Homework
             formGraphics.FillEllipse(myBush, new Rectangle(
                 X,
                 Y,
-                20, 20
+               30, 30
                 ));
             myBush.Dispose();
             formGraphics.Dispose();
@@ -82,16 +106,24 @@ namespace Homework
             Font font = new Font("UTM Alexander", 10);
             SolidBrush solidBrush = new SolidBrush(Color.Black);
             StringFormat stringFormat = new StringFormat();
-            formGraphics1.DrawString(drawNumber, font, solidBrush, X, Y, stringFormat);
+
+            formGraphics1.DrawString(
+                drawNumber,
+                font,
+                solidBrush,
+                X + 10 - drawNumber.Length * 1.5f,
+                Y + 5,
+                stringFormat);
+
             count++;
 
             Point p = new Point();
             p.GetPoint(X, Y, count);
             points.Add(p);
 
-            Graphics formGraphics2 = this.CreateGraphics();
-            string drawLocation = "x:" + p.PointX.ToString() + " y:" + p.PointY.ToString();
-            formGraphics2.DrawString(drawLocation, font, solidBrush, X + 10, Y + 10, stringFormat);
+            //Graphics formGraphics2 = this.CreateGraphics();
+            //string drawLocation = "x:" + p.PointX.ToString() + " y:" + p.PointY.ToString();
+            //formGraphics2.DrawString(drawLocation, font, solidBrush, X + 10, Y + 10, stringFormat);
 
             font.Dispose();
             solidBrush.Dispose();
