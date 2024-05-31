@@ -20,6 +20,7 @@ namespace Homework
         public static int nodes = 0;
 
         private int oldWidth = 0, oldHeight = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -46,6 +47,10 @@ namespace Homework
             CLoseBtn.Location = new System.Drawing.Point(
                 CLoseBtn.Left + addX,
                 CLoseBtn.Top + addY);
+
+            ClearBrn.Location = new System.Drawing.Point(
+                ClearBrn.Left + addX,
+                ClearBrn.Top + addY);
         }
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
@@ -59,6 +64,10 @@ namespace Homework
         {
             if (nodes != 0)
             {
+                Graphics gp=this.CreateGraphics();
+                gp.Clear(this.BackColor);
+                gp.Dispose();
+
                 ThreadStart threadStart = new ThreadStart(Draw);
                 Thread thread = new Thread(threadStart);
                 thread.IsBackground = true;
@@ -72,6 +81,16 @@ namespace Homework
             this.Close();
         }
 
+        private void ClearBrn_Click(object sender, EventArgs e)
+        {
+            count = 1;
+            nodes = 0;
+            points.Clear();
+
+            Graphics gp = this.CreateGraphics();
+            gp.Clear(this.BackColor);
+            gp.Dispose();
+        }
 
         Point[] p = new Point[2];
         int k = 0;
@@ -104,7 +123,7 @@ namespace Homework
                     break;
                 }
             }
-            if (IsChoosePoint == false || k == 2)
+            if ((IsChoosePoint == false || k == 2) && p[0] != null)
             {
                 k = 0;
                 for (int i = 0; i < 2; i++)
@@ -112,9 +131,11 @@ namespace Homework
                     pen = new Pen(Color.Green, 2);
                     gp = this.CreateGraphics();
                     gp.DrawEllipse(pen, p[i].X - 15, p[i].Y - 15, 30, 30);
+                    gp.Dispose(); pen.Dispose();
                 }
             }
         }
+
         void Draw()
         {
             for (int i = 0; i < nodes; i++)
@@ -135,6 +156,7 @@ namespace Homework
                 }
             }
         }
+
         private void DrawPoint()
         {
             Random random = new Random();
@@ -178,6 +200,7 @@ namespace Homework
             solidBrush.Dispose();
             stringFormat.Dispose();
         }
+
         private void DrawLine(Point a, Point b)
         {
             Pen pen = new Pen(Color.Red);
