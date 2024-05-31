@@ -30,7 +30,7 @@ namespace Homework
         private void Form1_Load(object sender, EventArgs e)
         {
             int addX = (this.Width - oldWidth) / 2;
-            int addY = (this.Height - oldHeight) / 2;
+            int addY = (this.Height - oldHeight);
 
             oldHeight = this.Height;
             oldWidth = this.Width;
@@ -43,10 +43,14 @@ namespace Homework
                 ConnectBtn.Left + addX,
                 ConnectBtn.Top + addY);
 
+            CLoseBtn.Location = new System.Drawing.Point(
+                CLoseBtn.Left + addX,
+                CLoseBtn.Top + addY);
         }
-
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
+            count = 1;
+            points.Clear();
             Form2 form2 = new Form2();
             form2.ShowDialog();
         }
@@ -63,6 +67,54 @@ namespace Homework
             else DrawPoint();
         }
 
+        private void CLoseBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        Point[] p = new Point[2];
+        int k = 0;
+        private void Mouse_Down(object sender, MouseEventArgs e)
+        {
+            double d = 0f;
+            bool IsChoosePoint = false;
+            Pen pen;
+            Graphics gp;
+
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                d = Math.Sqrt((Math.Pow(e.X - points[i].X, 2) + Math.Pow(e.Y - points[i].Y, 2)));
+                if (d <= 30f)
+                {
+                    IsChoosePoint = true;
+                    pen = new Pen(Color.Blue, 2);
+                    gp = this.CreateGraphics();
+                    gp.DrawEllipse(pen, points[i].X - 15, points[i].Y - 15, 30, 30);
+                    gp.Dispose();
+                    pen.Dispose();
+
+                    p[k] = points[i];
+                    k++;
+                    if (k == 2)
+                    {
+                        DrawLine(p[0], p[1]);
+                    }
+                    break;
+                }
+            }
+            if (IsChoosePoint == false || k == 2)
+            {
+                k = 0;
+                for (int i = 0; i < 2; i++)
+                {
+                    pen = new Pen(Color.Green, 2);
+                    gp = this.CreateGraphics();
+                    gp.DrawEllipse(pen, p[i].X - 15, p[i].Y - 15, 30, 30);
+                }
+            }
+        }
         void Draw()
         {
             for (int i = 0; i < nodes; i++)
@@ -83,22 +135,19 @@ namespace Homework
                 }
             }
         }
-
         private void DrawPoint()
         {
             Random random = new Random();
-            int X = random.Next(10, this.Width - 50);
-            int Y = random.Next(10, this.Height - 50);
+            int X = 0, Y = 0;
+
+            X = random.Next(10, this.Width - 200);
+            Y = random.Next(15, this.Height - 200);
 
             //Ve hinh tron dai dien cho cac node
-            SolidBrush myBush = new SolidBrush(Color.GreenYellow);
+            Pen penNode = new Pen(Color.Green, 2);
             Graphics formGraphics = this.CreateGraphics();
-            formGraphics.FillEllipse(myBush, new Rectangle(
-                X,
-                Y,
-               30, 30
-                ));
-            myBush.Dispose();
+            formGraphics.DrawEllipse(penNode, X, Y, 30, 30);
+            penNode.Dispose();
             formGraphics.Dispose();
 
             Graphics formGraphics1 = this.CreateGraphics();
@@ -118,24 +167,29 @@ namespace Homework
             count++;
 
             Point p = new Point();
-            p.GetPoint(X, Y, count);
+            p.SetPoint(X + 15, Y + 15, count);
             points.Add(p);
 
             //Graphics formGraphics2 = this.CreateGraphics();
-            //string drawLocation = "x:" + p.PointX.ToString() + " y:" + p.PointY.ToString();
+            //string drawLocation = "x:" + p.X.ToString() + " y:" + p.Y.ToString();
             //formGraphics2.DrawString(drawLocation, font, solidBrush, X + 10, Y + 10, stringFormat);
 
             font.Dispose();
             solidBrush.Dispose();
             stringFormat.Dispose();
         }
-
         private void DrawLine(Point a, Point b)
         {
-            Pen pen = new Pen(Color.Black);
+            Pen pen = new Pen(Color.Red);
             Graphics graphics = this.CreateGraphics();
 
-            graphics.DrawLine(pen, a.PointX, a.PointY, b.PointX, b.PointY);
+            graphics.DrawLine(
+                pen,
+                a.X,
+                a.Y,
+                b.X,
+                b.Y
+                );
         }
     }
 }

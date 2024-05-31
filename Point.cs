@@ -8,14 +8,14 @@ namespace Homework
 {
     internal class Point
     {
-        public int PointX;
-        public int PointY;
+        public int X;
+        public int Y;
         public int value;
 
-        public void GetPoint(int x, int y, int v)
+        public void SetPoint(int x, int y, int v)
         {
-            PointX = x;
-            PointY = y;
+            X = x;
+            Y = y;
             value = v;
         }
     }
