@@ -64,7 +64,7 @@ namespace Homework
         {
             if (nodes != 0)
             {
-                Graphics gp=this.CreateGraphics();
+                Graphics gp = this.CreateGraphics();
                 gp.Clear(this.BackColor);
                 gp.Dispose();
 
@@ -206,13 +206,20 @@ namespace Homework
             Pen pen = new Pen(Color.Red);
             Graphics graphics = this.CreateGraphics();
 
-            graphics.DrawLine(
-                pen,
-                a.X,
-                a.Y,
-                b.X,
-                b.Y
-                );
+            double dx = a.X - b.X;
+            double dy = a.Y - b.Y;
+
+            double magnitude = Math.Sqrt(dx * dx + dy * dy);
+
+            dx = dx / magnitude * 15;
+            dy = dy / magnitude * 15;
+
+            int x1 = b.X + (int)dx;
+            int y1 = b.Y + (int)dy;
+            int x2 = a.X - (int)dx;
+            int y2 = a.Y - (int)dy;
+
+            graphics.DrawLine(pen, x1, y1, x2, y2);
         }
     }
 }
